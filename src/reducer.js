@@ -1,4 +1,5 @@
 import Immutable, { Map, List, Set } from 'immutable'
+import uuid from 'uuid'
 import { resolveEach, updateListItem } from './lib/reduxResolver'
 import actionType, * as actionTypes from './actions/actionTypes'
 import { recordProps } from './pageInfoTranslator'
@@ -40,7 +41,13 @@ function reset(initialSettings) {
 }
 
 function expire(state) {
-  return state.merge({ stale: true, preloaded: false, loadError: null })
+  return state.merge({
+    stale: true,
+    isLoading: false,
+    preloaded: false,
+    loadError: null,
+    requestId: uuid.v1()
+  })
 }
 
 function next(state) {
@@ -112,10 +119,9 @@ function sortChanged(state, action) {
   )
 }
 
-function fetching(state, action) {
+function fetching(state) {
   return state.merge({
-    isLoading: true,
-    requestId: action.requestId
+    isLoading: true
   })
 }
 

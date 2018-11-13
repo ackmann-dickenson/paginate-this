@@ -1,17 +1,16 @@
-import uuid from 'uuid'
 import actionType, * as actionTypes from './actionTypes'
 import { translate } from '../pageInfoTranslator'
 import { getPaginator, listConfig } from '../lib/stateManagement'
 
 const fetcher = (id, config) =>
   (dispatch, getState) => {
-    const { fetch, params } = listConfig(id)
-    const pageInfo = getPaginator(id, getState())
-    const requestId = uuid.v1()
+    const { fetch, params } = listConfig(id);
+    const pageInfo = getPaginator(id, getState());
+    const requestId = pageInfo.get('requestId');
 
-    dispatch({ type: actionType(actionTypes.FETCH_RECORDS, id), requestId })
+    dispatch({ type: actionType(actionTypes.FETCH_RECORDS, id) });
 
-    const promise = dispatch(fetch(translate(pageInfo), config))
+    const promise = dispatch(fetch(translate(pageInfo), config));
 
     return promise.then(resp =>
       dispatch({
