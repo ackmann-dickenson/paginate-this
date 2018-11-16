@@ -131,6 +131,7 @@ function updateResults(state, action) {
   }
 
   return state.merge({
+    ...action,
     results: Immutable.fromJS(action.results),
     totalCount: action.totalCount,
     isLoading: false,

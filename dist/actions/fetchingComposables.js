@@ -3,6 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 exports.default = fetchingComposables;
 
 var _actionTypes = require('./actionTypes');
@@ -29,12 +32,12 @@ var fetcher = function fetcher(id, config) {
     var promise = dispatch(fetch((0, _pageInfoTranslator.translate)(pageInfo), config));
 
     return promise.then(function (resp) {
-      return dispatch({
+      return dispatch(_extends({}, resp.data, {
         type: (0, actionTypes.default)(actionTypes.RESULTS_UPDATED, id),
         results: resp.data[params.resultsProp],
         totalCount: resp.data[params.totalCountProp],
         requestId: requestId
-      });
+      }));
     }).catch(function (error) {
       return dispatch({
         type: (0, actionTypes.default)(actionTypes.RESULTS_UPDATED_ERROR, id),
