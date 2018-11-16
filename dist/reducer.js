@@ -135,12 +135,12 @@ function updateResults(state, action) {
     return state;
   }
 
-  return state.merge({
+  return state.merge(_extends({}, action, {
     results: _immutable2.default.fromJS(action.results),
     totalCount: action.totalCount,
     isLoading: false,
     stale: false
-  });
+  }));
 }
 
 function resetResults(state, action) {
