@@ -14,6 +14,7 @@ const fetcher = (id, config) =>
 
     return promise.then(resp =>
       dispatch({
+        ...resp.data,
         type: actionType(actionTypes.RESULTS_UPDATED, id),
         results: resp.data[params.resultsProp],
         totalCount: resp.data[params.totalCountProp],
